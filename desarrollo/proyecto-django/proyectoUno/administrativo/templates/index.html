@@ -1,0 +1,53 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Listado de Propietarios
+{% endblock %}
+
+{% block content %}
+<h3>Número de propietario {{ numero_Propietarios }}</h3>
+
+<table id="tabla_datos">
+
+  <thead>
+    <tr>
+      <th>Propietario</th>
+      <th>Cedula</th>
+      <th>Correo</th>
+      <th>Numeros Telefónico </th>
+      <th>Opciones</th>
+    </tr>
+  </thead>
+
+  {% for e in propietario %}
+  <tr>
+    <td> {{e.nombre}} {{e.apellido}}</td>
+    <td> {{e.cedula}}</td>
+    <td> {{e.correo}}</td>
+    <td>
+      <ul>
+        {% for t in e.departamentos.all %}
+          <li>
+            <span>{{t.telefono}} - {{t.tipo}} - [<a href="{% url 'editar_numero_telefonico' t.id %}">editar</a>] </span>
+          </li>
+        {% endfor %}
+      </ul>
+        [<a href="{% url 'crear_numero_telefonico_Propietario' e.id%}">+Teléfono</a>]
+    </td>
+    <td> <a href="{% url 'obtener_Propietario' e.id %}">ver</a> <br>
+      <a href="{% url 'editar_Propietario' e.id %}">editar</a> <br>
+      <a href="{% url 'eliminar_Propietario' e.id %}"
+      onclick="return confirm('¿Está seguro de la eliminación?')" >
+      eliminar</a>
+    </td>
+
+  </tr>
+  {% endfor %}
+</table>
+
+<script type="text/javascript">
+  $(document).ready( function () {
+    $('#tabla_datos').DataTable();
+  });
+</script>
+{% endblock %}

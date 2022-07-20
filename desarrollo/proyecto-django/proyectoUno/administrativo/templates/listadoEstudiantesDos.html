@@ -1,0 +1,15 @@
+<h2>Listado de Propietarios</h3>
+<h3>Número de propietario {{ numero_Propietarios }}</h3>
+
+{% for e in propietario %}
+    
+  {{e}}<br/>
+  <ul>
+  {% for numero in e.Departamento_set.all%}
+      <li>
+          Número telefónico {{numero}}<br/>
+      </li>
+  {% endfor %}
+  </ul>
+  <br/>
+{% endfor %}
